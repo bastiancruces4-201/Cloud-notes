@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { IonContent, IonButton } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-welcome',
@@ -9,17 +9,21 @@ import { IonContent, IonButton } from '@ionic/angular/standalone';
   styleUrls: ['./welcome.page.scss'],
   standalone: true,
   imports: [
-IonContent,
-IonButton,
-CommonModule,
-FormsModule
-]
+    IonContent,
+    IonButton,
+    CommonModule
+  ]
 })
-export class WelcomePage implements OnInit {
+export class WelcomePage {
 
-  constructor() { }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 
 }

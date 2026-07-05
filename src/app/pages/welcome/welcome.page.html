@@ -19,14 +19,22 @@
 
     <div class="actions">
 
-      <ion-button expand="block" class="primary-button">
-        Iniciar sesión
+      <ion-button
+    expand="block"
+    class="primary-button"
+    (click)="goToLogin()">
+
+    Iniciar sesión
+
       </ion-button>
 
-      <ion-button expand="block"
-                  fill="outline"
-                  class="secondary-button">
-        Crear cuenta
+      <ion-button
+    expand="block"
+    fill="outline"
+    class="secondary-button"
+    (click)="goToRegister()">
+
+    Crear cuenta
       </ion-button>
 
     </div>

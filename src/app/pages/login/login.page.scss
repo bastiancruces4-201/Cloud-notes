@@ -1,0 +1,107 @@
+.login-page {
+  --background: #f8fafc;
+}
+
+.login-container {
+  min-height: 100%;
+  padding: 28px 24px;
+}
+
+.back-button {
+  border: none;
+  background: #ffffff;
+  color: #1e293b;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  font-size: 22px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.header {
+  margin-top: 34px;
+  margin-bottom: 28px;
+}
+
+.logo-mini {
+  width: 62px;
+  height: 62px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+p {
+  margin-top: 10px;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.form-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 18px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+.input-item {
+  --background: #f8fafc;
+  --border-radius: 16px;
+  margin-bottom: 14px;
+  border-radius: 16px;
+}
+
+ion-label {
+  color: #475569;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+ion-input {
+  --color: #1e293b;
+  --placeholder-color: #94a3b8;
+}
+
+.primary-button {
+  margin-top: 18px;
+  --background: #2563eb;
+  --background-hover: #1d4ed8;
+  --border-radius: 16px;
+  height: 52px;
+  font-weight: 700;
+}
+
+.link-button {
+  width: 100%;
+  margin-top: 18px;
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.footer-text {
+  margin-top: 28px;
+  text-align: center;
+  color: #64748b;
+}
+
+.footer-text button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-weight: 800;
+  margin-left: 6px;
+}

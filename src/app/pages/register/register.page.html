@@ -1,0 +1,91 @@
+<ion-content [fullscreen]="true" class="register-page">
+  <div class="register-container">
+
+    <button class="back-button" (click)="goBack()">
+      ←
+    </button>
+
+    <div class="header">
+      <div class="logo-mini">☁️</div>
+      <h1>Crear cuenta</h1>
+      <p>Regístrate con tus datos académicos para comenzar a usar Cloud Notes.</p>
+    </div>
+
+    <div class="form-card">
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input
+          type="text"
+          placeholder="Ingresa tu nombre"
+          [(ngModel)]="name">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Apellido</ion-label>
+        <ion-input
+          type="text"
+          placeholder="Ingresa tu apellido"
+          [(ngModel)]="lastName">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Universidad</ion-label>
+        <ion-input
+          type="text"
+          placeholder="Ej: Universidad Andrés Bello"
+          [(ngModel)]="university">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Carrera</ion-label>
+        <ion-input
+          type="text"
+          placeholder="Ej: Ingeniería en Informática"
+          [(ngModel)]="career">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Correo institucional</ion-label>
+        <ion-input
+          type="email"
+          placeholder="tu.correo@universidad.cl"
+          [(ngModel)]="email">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Contraseña</ion-label>
+        <ion-input
+          type="password"
+          placeholder="Crea una contraseña"
+          [(ngModel)]="password">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Confirmar contraseña</ion-label>
+        <ion-input
+          type="password"
+          placeholder="Repite tu contraseña"
+          [(ngModel)]="confirmPassword">
+        </ion-input>
+      </ion-item>
+
+      <ion-button expand="block" class="primary-button" (click)="register()">
+        Crear cuenta
+      </ion-button>
+
+    </div>
+
+    <div class="footer-text">
+      <span>¿Ya tienes cuenta?</span>
+      <button (click)="goToLogin()">Iniciar sesión</button>
+    </div>
+
+  </div>
+</ion-content>

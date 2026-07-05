@@ -1,0 +1,50 @@
+<ion-content [fullscreen]="true" class="login-page">
+  <div class="login-container">
+
+    <button class="back-button" (click)="goBack()">
+      ←
+    </button>
+
+    <div class="header">
+      <div class="logo-mini">☁️</div>
+      <h1>Iniciar sesión</h1>
+      <p>Ingresa con tu correo institucional para acceder a Cloud Notes.</p>
+    </div>
+
+    <div class="form-card">
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Correo institucional</ion-label>
+        <ion-input
+          type="email"
+          placeholder="tu.correo@universidad.cl"
+          [(ngModel)]="email">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Contraseña</ion-label>
+        <ion-input
+          type="password"
+          placeholder="Ingresa tu contraseña"
+          [(ngModel)]="password">
+        </ion-input>
+      </ion-item>
+
+      <ion-button expand="block" class="primary-button" (click)="login()">
+        Entrar
+      </ion-button>
+
+      <button class="link-button">
+        ¿Olvidaste tu contraseña?
+      </button>
+
+    </div>
+
+    <div class="footer-text">
+      <span>¿No tienes cuenta?</span>
+      <button (click)="goToRegister()">Crear cuenta</button>
+    </div>
+
+  </div>
+</ion-content>
