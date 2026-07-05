@@ -6,9 +6,11 @@ import {
   IonButton,
   IonInput,
   IonItem,
-  IonLabel
+  IonLabel,
+  ToastController
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth';
 
 @Component({
   selector: 'app-register',
@@ -34,18 +36,38 @@ export class RegisterPage {
   password = '';
   confirmPassword = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private toastController: ToastController
+  ) {}
 
-  register() {
-    console.log('Registro:', {
-      name: this.name,
-      lastName: this.lastName,
-      university: this.university,
-      career: this.career,
-      email: this.email,
-      password: this.password,
-      confirmPassword: this.confirmPassword
-    });
+  async register() {
+    if (!this.name || !this.lastName || !this.university || !this.career || !this.email || !this.password || !this.confirmPassword) {
+      await this.showToast('Debes completar todos los campos.');
+      return;
+    }
+
+    if (this.password !== this.confirmPassword) {
+      await this.showToast('Las contraseñas no coinciden.');
+      return;
+    }
+
+    if (this.password.length < 6) {
+      await this.showToast('La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
+    try {
+      await this.authService.register(this.email, this.password);
+
+      await this.showToast('Cuenta creada. Revisa tu correo para verificarla.');
+      this.router.navigate(['/login']);
+
+    } catch (error) {
+      console.error(error);
+      await this.showToast('No se pudo crear la cuenta. Revisa los datos ingresados.');
+    }
   }
 
   goToLogin() {
@@ -54,5 +76,16 @@ export class RegisterPage {
 
   goBack() {
     this.router.navigate(['/welcome']);
+  }
+
+  private async showToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2500,
+      position: 'bottom',
+      color: 'primary'
+    });
+
+    await toast.present();
   }
 }
