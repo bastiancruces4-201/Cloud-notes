@@ -59,7 +59,17 @@ export class RegisterPage {
     }
 
     try {
-      await this.authService.register(this.email, this.password);
+      await this.authService.register(
+  {
+    uid: '',
+    name: this.name,
+    lastName: this.lastName,
+    university: this.university,
+    career: this.career,
+    email: this.email,
+    createdAt: new Date()
+  },
+  this.password);
 
       await this.showToast('Cuenta creada. Revisa tu correo para verificarla.');
       this.router.navigate(['/login']);

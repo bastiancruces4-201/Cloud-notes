@@ -9,22 +9,41 @@ import {
   User
 } from '@angular/fire/auth';
 
+import {
+  Firestore,
+  doc,
+  setDoc
+} from '@angular/fire/firestore';
+
+import { UserModel } from '../models/user.model';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private auth: Auth) {}
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore
+  ) {}
 
-  async register(email: string, password: string): Promise<User> {
+  async register(userData: UserModel, password: string): Promise<User> {
     const credential = await createUserWithEmailAndPassword(
       this.auth,
-      email,
+      userData.email,
       password
     );
 
     if (credential.user) {
       await sendEmailVerification(credential.user);
+
+      const userRef = doc(this.firestore, `users/${credential.user.uid}`);
+
+      await setDoc(userRef, {
+        ...userData,
+        uid: credential.user.uid,
+        emailVerified: credential.user.emailVerified
+      });
     }
 
     return credential.user;

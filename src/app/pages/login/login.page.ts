@@ -60,6 +60,20 @@ export class LoginPage {
       await this.showToast('Correo o contraseña incorrectos.');
     }
   }
+  async resetPassword() {
+  if (!this.email) {
+    await this.showToast('Ingresa tu correo para recuperar la contraseña.');
+    return;
+  }
+
+  try {
+    await this.authService.resetPassword(this.email);
+    await this.showToast('Te enviamos un correo para restablecer tu contraseña.');
+  } catch (error) {
+    console.error(error);
+    await this.showToast('No se pudo enviar el correo de recuperación.');
+  }
+}
 
   goToRegister() {
     this.router.navigate(['/register']);
