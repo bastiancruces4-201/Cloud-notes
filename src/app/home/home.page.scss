@@ -1,2 +1,158 @@
-/* Estilos del Home.
-   Se implementarán cuando terminemos el Login y Registro. */
+.home-page {
+  --background: #f8fafc;
+}
+
+.dashboard-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.loading-container {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.loading-container p {
+  margin-top: 16px;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.welcome-text {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.user-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2563eb;
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.user-card {
+  padding: 24px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  color: white;
+  box-shadow: 0 14px 35px rgba(37, 99, 235, 0.2);
+}
+
+.greeting {
+  margin: 0 0 12px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.career,
+.university {
+  margin: 5px 0;
+  font-size: 15px;
+}
+
+.menu-section {
+  margin-top: 34px;
+}
+
+.menu-section h2 {
+  margin-bottom: 18px;
+  font-size: 21px;
+  color: #1e293b;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.menu-card {
+  width: 100%;
+  padding: 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  border: none;
+  border-radius: 18px;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+}
+
+.menu-card ion-icon {
+  min-width: 32px;
+  font-size: 32px;
+  color: #2563eb;
+}
+
+.menu-card h3 {
+  margin: 0 0 7px;
+  font-size: 17px;
+  color: #1e293b;
+}
+
+.menu-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #64748b;
+}
+
+.logout-button {
+  width: 100%;
+  max-width: 320px;
+  margin: 36px auto 0;
+  --color: #dc2626;
+  --border-color: #dc2626;
+  --border-radius: 14px;
+}
+
+@media (max-width: 650px) {
+  .dashboard-container {
+    padding: 24px 18px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 28px;
+  }
+
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .greeting {
+    font-size: 21px;
+  }
+}

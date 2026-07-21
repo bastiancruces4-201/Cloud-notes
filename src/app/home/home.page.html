@@ -1,7 +1,121 @@
-<ion-content class="ion-padding">
-  <h1>Home Cloud Notes</h1>
+<ion-content [fullscreen]="true" class="home-page">
 
-  <p>Bienvenido al inicio de la aplicación.</p>
+  <div class="dashboard-container">
 
-  <p>Esta pantalla se desarrollará después del Login.</p>
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Cargando información...</p>
+    </div>
+
+    <div *ngIf="!loading">
+
+      <header class="dashboard-header">
+
+        <div>
+          <p class="welcome-text">Bienvenido a</p>
+          <h1>Cloud Notes</h1>
+        </div>
+
+        <div class="user-avatar">
+          {{ userProfile?.name?.charAt(0) || 'U' }}
+        </div>
+
+      </header>
+
+      <section class="user-card">
+
+        <p class="greeting">
+          Hola, {{ userProfile?.name || 'usuario' }} 👋
+        </p>
+
+        <p class="career">
+          {{ userProfile?.career || 'Carrera no registrada' }}
+        </p>
+
+        <p class="university">
+          {{ userProfile?.university || 'Universidad no registrada' }}
+        </p>
+
+      </section>
+
+      <section class="menu-section">
+
+        <h2>¿Qué deseas hacer?</h2>
+
+        <div class="menu-grid">
+
+          <button
+            type="button"
+            class="menu-card"
+            (click)="goToMyDocuments()">
+
+            <ion-icon name="folder-outline"></ion-icon>
+
+            <div>
+              <h3>Mis apuntes</h3>
+              <p>Administra tus documentos académicos.</p>
+            </div>
+
+          </button>
+
+          <button
+            type="button"
+            class="menu-card"
+            (click)="goToUploadDocument()">
+
+            <ion-icon name="cloud-upload-outline"></ion-icon>
+
+            <div>
+              <h3>Subir apunte</h3>
+              <p>Comparte archivos con otros estudiantes.</p>
+            </div>
+
+          </button>
+
+          <button
+            type="button"
+            class="menu-card"
+            (click)="goToSearchDocuments()">
+
+            <ion-icon name="search-outline"></ion-icon>
+
+            <div>
+              <h3>Buscar apuntes</h3>
+              <p>Encuentra material por asignatura.</p>
+            </div>
+
+          </button>
+
+          <button
+            type="button"
+            class="menu-card"
+            (click)="goToProfile()">
+
+            <ion-icon name="person-outline"></ion-icon>
+
+            <div>
+              <h3>Mi perfil</h3>
+              <p>Consulta tus datos personales.</p>
+            </div>
+
+          </button>
+
+        </div>
+
+      </section>
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        class="logout-button"
+        (click)="logout()">
+
+        Cerrar sesión
+
+      </ion-button>
+
+    </div>
+
+  </div>
+
 </ion-content>

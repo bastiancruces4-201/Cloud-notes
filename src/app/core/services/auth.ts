@@ -6,13 +6,15 @@ import {
   sendEmailVerification,
   signOut,
   sendPasswordResetEmail,
+  onAuthStateChanged,
   User
 } from '@angular/fire/auth';
 
 import {
   Firestore,
   doc,
-  setDoc
+  setDoc,
+  getDoc
 } from '@angular/fire/firestore';
 
 import { UserModel } from '../models/user.model';
@@ -66,4 +68,23 @@ export class AuthService {
   async resetPassword(email: string): Promise<void> {
     await sendPasswordResetEmail(this.auth, email);
   }
+  getCurrentUser(): Promise<User | null> {
+  return new Promise((resolve) => {
+    const unsubscribe = onAuthStateChanged(this.auth, (user) => {
+      unsubscribe();
+      resolve(user);
+    });
+  });
+}
+
+async getUserProfile(uid: string): Promise<UserModel | null> {
+  const userRef = doc(this.firestore, `users/${uid}`);
+  const userSnapshot = await getDoc(userRef);
+
+  if (!userSnapshot.exists()) {
+    return null;
+  }
+
+  return userSnapshot.data() as UserModel;
+}
 }
