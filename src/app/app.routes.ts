@@ -33,5 +33,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/register/register.page').then((m) => m.RegisterPage),
   },
+  {
+    path: 'my-documents',
+    loadComponent: () => import('./pages/my-documents/my-documents.page').then( m => m.MyDocumentsPage)
+  },
+  {
+    path: 'upload-document',
+    loadComponent: () => import('./pages/upload-document/upload-document.page').then( m => m.UploadDocumentPage)
+  },
 
 ];

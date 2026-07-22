@@ -1,0 +1,131 @@
+.documents-page {
+  --background: #f8fafc;
+}
+
+.documents-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.back-button {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: #2563eb;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+}
+
+.section-label {
+  margin: 0 0 4px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.documents-summary {
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  color: white;
+  box-shadow: 0 14px 35px rgba(37, 99, 235, 0.2);
+}
+
+.summary-label {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.summary-number {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.documents-summary ion-icon {
+  font-size: 48px;
+}
+
+.upload-button {
+  width: 100%;
+  max-width: 340px;
+  margin: 28px auto 0;
+  --background: #2563eb;
+  --background-hover: #1d4ed8;
+  --border-radius: 14px;
+  height: 48px;
+  font-weight: 700;
+}
+
+.empty-state {
+  margin-top: 48px;
+  padding: 38px 24px;
+  border-radius: 20px;
+  background: white;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.empty-icon {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 20px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.empty-icon ion-icon {
+  font-size: 38px;
+}
+
+.empty-state h2 {
+  margin: 0 0 12px;
+  color: #1e293b;
+  font-size: 21px;
+}
+
+.empty-state p {
+  max-width: 430px;
+  margin: 0 auto;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+@media (max-width: 650px) {
+  .documents-container {
+    padding: 24px 18px;
+  }
+
+  .page-header h1 {
+    font-size: 27px;
+  }
+}

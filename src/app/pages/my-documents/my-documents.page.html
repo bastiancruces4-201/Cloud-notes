@@ -1,0 +1,65 @@
+<ion-content [fullscreen]="true" class="documents-page">
+
+  <div class="documents-container">
+
+    <header class="page-header">
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="goBack()">
+
+        <ion-icon name="arrow-back-outline"></ion-icon>
+
+      </button>
+
+      <div>
+        <p class="section-label">Cloud Notes</p>
+        <h1>Mis apuntes</h1>
+      </div>
+
+    </header>
+
+    <section class="documents-summary">
+
+      <div>
+        <p class="summary-label">Documentos guardados</p>
+        <p class="summary-number">0</p>
+      </div>
+
+      <ion-icon name="document-text-outline"></ion-icon>
+
+    </section>
+
+    <ion-button
+      expand="block"
+      class="upload-button"
+      (click)="goToUploadDocument()">
+
+      <ion-icon
+        slot="start"
+        name="cloud-upload-outline">
+      </ion-icon>
+
+      Subir nuevo apunte
+
+    </ion-button>
+
+    <section class="empty-state">
+
+      <div class="empty-icon">
+        <ion-icon name="document-text-outline"></ion-icon>
+      </div>
+
+      <h2>Todavía no tienes apuntes</h2>
+
+      <p>
+        Cuando subas tus primeros archivos académicos,
+        aparecerán organizados en esta sección.
+      </p>
+
+    </section>
+
+  </div>
+
+</ion-content>

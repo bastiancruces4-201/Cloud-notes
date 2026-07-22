@@ -73,8 +73,8 @@ export class HomePage implements OnInit {
     }
   }
 
-  goToMyDocuments() {
-    console.log('Ir a Mis apuntes');
+  async goToMyDocuments() {
+  await this.router.navigate(['/my-documents']);
   }
 
   goToUploadDocument() {

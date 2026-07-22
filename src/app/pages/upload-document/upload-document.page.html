@@ -1,0 +1,147 @@
+<ion-content [fullscreen]="true" class="upload-page">
+
+  <div class="upload-container">
+
+    <header class="page-header">
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="goBack()">
+
+        <ion-icon name="arrow-back-outline"></ion-icon>
+
+      </button>
+
+      <div>
+        <p class="section-label">Cloud Notes</p>
+        <h1>Subir apunte</h1>
+      </div>
+
+    </header>
+
+    <section class="upload-card">
+
+      <div class="form-heading">
+
+        <div class="form-icon">
+          <ion-icon name="cloud-upload-outline"></ion-icon>
+        </div>
+
+        <div>
+          <h2>Información del documento</h2>
+          <p>
+            Completa los datos y selecciona el archivo académico que deseas
+            compartir.
+          </p>
+        </div>
+
+      </div>
+
+      <ion-item lines="none" class="form-item">
+        <ion-label position="stacked">Título del apunte</ion-label>
+
+        <ion-input
+          [(ngModel)]="title"
+          placeholder="Ejemplo: Guía de programación">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="form-item">
+        <ion-label position="stacked">Asignatura</ion-label>
+
+        <ion-select
+          [(ngModel)]="subject"
+          placeholder="Selecciona una asignatura">
+
+          <ion-select-option value="Programación">
+            Programación
+          </ion-select-option>
+
+          <ion-select-option value="Bases de Datos">
+            Bases de Datos
+          </ion-select-option>
+
+          <ion-select-option value="Matemáticas">
+            Matemáticas
+          </ion-select-option>
+
+          <ion-select-option value="Redes">
+            Redes
+          </ion-select-option>
+
+          <ion-select-option value="Ciberseguridad">
+            Ciberseguridad
+          </ion-select-option>
+
+          <ion-select-option value="Otra">
+            Otra
+          </ion-select-option>
+
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none" class="form-item">
+        <ion-label position="stacked">Descripción</ion-label>
+
+        <ion-textarea
+          [(ngModel)]="description"
+          rows="4"
+          maxlength="300"
+          placeholder="Describe brevemente el contenido del archivo">
+        </ion-textarea>
+      </ion-item>
+
+      <div class="file-section">
+
+        <label for="documentFile" class="file-selector">
+
+          <ion-icon name="document-attach-outline"></ion-icon>
+
+          <div>
+            <strong>Seleccionar archivo</strong>
+            <span>PDF, Word, Excel o PowerPoint</span>
+          </div>
+
+        </label>
+
+        <input
+          id="documentFile"
+          type="file"
+          accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+          (change)="onFileSelected($event)">
+
+        <div *ngIf="selectedFile" class="selected-file">
+
+          <ion-icon name="document-attach-outline"></ion-icon>
+
+          <div>
+            <strong>{{ selectedFile.name }}</strong>
+            <span>
+              {{ selectedFile.size / 1024 / 1024 | number:'1.1-2' }} MB
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <ion-button
+        expand="block"
+        class="submit-button"
+        (click)="prepareUpload()">
+
+        <ion-icon
+          slot="start"
+          name="cloud-upload-outline">
+        </ion-icon>
+
+        Preparar carga
+
+      </ion-button>
+
+    </section>
+
+  </div>
+
+</ion-content>
