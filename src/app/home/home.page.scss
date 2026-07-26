@@ -156,3 +156,131 @@
     font-size: 21px;
   }
 }
+.loading-state {
+  margin-top: 40px;
+  padding: 30px;
+  border-radius: 20px;
+  background: rgb(134, 74, 74);
+  text-align: center;
+  color: #64748b;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.documents-list {
+  margin-top: 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.document-card {
+  padding: 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  border-radius: 20px;
+  background: rgb(116, 83, 83);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.document-icon {
+  min-width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 17px;
+  background: #193152;
+  color: #2563eb;
+}
+
+.document-icon ion-icon {
+  font-size: 30px;
+}
+
+.document-information {
+  min-width: 0;
+  flex: 1;
+}
+
+.document-information h2 {
+  margin: 0 0 7px;
+  color: #1e293b;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.document-subject {
+  margin: 0 0 10px;
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.document-description {
+  margin: 0 0 14px;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.document-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+.document-details span {
+  color: #64748b;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 650px) {
+  .document-card {
+    padding: 18px;
+  }
+
+  .document-details {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+.documents-container,
+.documents-container p,
+.documents-container h1,
+.documents-container h2,
+.documents-container span {
+  color: #1e293b;
+}
+
+.loading-state p {
+  color: #64748b;
+}
+
+.empty-state h2 {
+  color: #1e293b;
+}
+
+.empty-state p {
+  color: #64748b;
+}
+
+.document-information h2 {
+  color: #1e293b;
+}
+
+.document-subject {
+  color: #2563eb;
+}
+
+.document-description,
+.document-details span {
+  color: #64748b;
+}
+.documents-summary,
+.documents-summary p,
+.documents-summary span,
+.documents-summary ion-icon {
+  color: #1e293b;
+}

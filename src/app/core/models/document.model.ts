@@ -7,5 +7,5 @@ export interface DocumentModel {
   fileType: string;
   fileSize: number;
   userId: string;
-  createdAt: Date;
+  createdAt: any;
 }

@@ -24,7 +24,10 @@
 
       <div>
         <p class="summary-label">Documentos guardados</p>
-        <p class="summary-number">0</p>
+
+        <p class="summary-number">
+          {{ documents.length }}
+        </p>
       </div>
 
       <ion-icon name="document-text-outline"></ion-icon>
@@ -45,7 +48,17 @@
 
     </ion-button>
 
-    <section class="empty-state">
+    <section
+      *ngIf="isLoading"
+      class="loading-state">
+
+      <p>Cargando tus apuntes...</p>
+
+    </section>
+
+    <section
+      *ngIf="!isLoading && documents.length === 0"
+      class="empty-state">
 
       <div class="empty-icon">
         <ion-icon name="document-text-outline"></ion-icon>
@@ -57,6 +70,56 @@
         Cuando subas tus primeros archivos académicos,
         aparecerán organizados en esta sección.
       </p>
+
+    </section>
+
+    <section
+      *ngIf="!isLoading && documents.length > 0"
+      class="documents-list">
+
+      <article
+        *ngFor="let document of documents"
+        class="document-card">
+
+        <div class="document-icon">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+
+        <div class="document-information">
+
+          <h2>{{ document.title }}</h2>
+
+          <p class="document-subject">
+            {{ document.subject }}
+          </p>
+
+          <p
+            *ngIf="document.description"
+            class="document-description">
+
+            {{ document.description }}
+
+          </p>
+
+          <div class="document-details">
+
+            <span>
+              {{ document.fileName }}
+            </span>
+
+            <span>
+              {{ formatFileSize(document.fileSize) }}
+            </span>
+
+            <span>
+              {{ formatDate(document.createdAt) }}
+            </span>
+
+          </div>
+
+        </div>
+
+      </article>
 
     </section>
 
