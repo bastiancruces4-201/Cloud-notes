@@ -2,6 +2,7 @@ import { DocumentService } from '../../core/services/document.service';
 import { AuthService } from '../../core/services/auth';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { StorageService } from '../../core/services/storage';
 import { FormsModule } from '@angular/forms';
 import {
   IonContent,
@@ -53,20 +54,21 @@ export class UploadDocumentPage {
   private router: Router,
   private toastController: ToastController,
   private documentService: DocumentService,
-  private authService: AuthService
-   ) {
-    addIcons({
-      arrowBackOutline,
-      cloudUploadOutline,
-      documentAttachOutline
-    });
+  private authService: AuthService,
+  private storageService: StorageService
+  ) {
+  addIcons({
+    arrowBackOutline,
+    cloudUploadOutline,
+    documentAttachOutline
+  });
   }
 
   async goBack() {
     await this.router.navigate(['/my-documents']);
   }
 
-  onFileSelected(event: Event) {
+  async onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
 
     if (!input.files || input.files.length === 0) {
@@ -75,7 +77,17 @@ export class UploadDocumentPage {
     }
 
     const file = input.files[0];
+    const maxFileSize = 200 * 1024 * 1024;
 
+if (file.size > maxFileSize) {
+  this.selectedFile = null;
+  input.value = '';
+
+  await this.showToast(
+    'El archivo no puede superar los 200 MB.'
+  );
+  return;
+}
     const allowedTypes = [
       'application/pdf',
       'application/msword',
@@ -99,6 +111,7 @@ export class UploadDocumentPage {
   }
 
   async prepareUpload() {
+
   if (!this.title.trim() || !this.subject || !this.selectedFile) {
     await this.showToast(
       'Debes ingresar el título, la asignatura y seleccionar un archivo.'
@@ -107,6 +120,7 @@ export class UploadDocumentPage {
   }
 
   try {
+
     const currentUser = await this.authService.getCurrentUser();
 
     if (!currentUser) {
@@ -116,31 +130,44 @@ export class UploadDocumentPage {
       return;
     }
 
+    // 1. Subimos el archivo real a Firebase Storage
+    const uploadedFile = await this.storageService.uploadDocument(
+    currentUser.uid,
+    this.selectedFile
+     );
+
+    // 2. Guardamos la información del apunte en Firestore
     await this.documentService.createDocument({
       title: this.title.trim(),
       subject: this.subject,
       description: this.description.trim(),
+
       fileName: this.selectedFile.name,
       fileType: this.selectedFile.type,
       fileSize: this.selectedFile.size,
+
+      fileUrl: uploadedFile.fileUrl,
+      filePath: uploadedFile.filePath,
+
       userId: currentUser.uid,
       createdAt: new Date()
     });
 
     await this.showToast(
-      'La información del apunte fue guardada correctamente.'
+      'El apunte fue subido correctamente.'
     );
 
     await this.router.navigate(['/my-documents']);
 
   } catch (error) {
+
     console.error(
-      'Error al guardar el documento:',
+      'Error al subir el apunte:',
       error
     );
 
     await this.showToast(
-      'Ocurrió un error al guardar la información del apunte.'
+      'Ocurrió un error al subir el apunte.'
     );
   }
 }

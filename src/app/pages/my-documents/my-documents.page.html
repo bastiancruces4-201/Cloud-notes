@@ -48,6 +48,7 @@
 
     </ion-button>
 
+    <!-- Cargando documentos -->
     <section
       *ngIf="isLoading"
       class="loading-state">
@@ -56,6 +57,7 @@
 
     </section>
 
+    <!-- Usuario sin documentos -->
     <section
       *ngIf="!isLoading && documents.length === 0"
       class="empty-state">
@@ -73,6 +75,7 @@
 
     </section>
 
+    <!-- Lista de documentos -->
     <section
       *ngIf="!isLoading && documents.length > 0"
       class="documents-list">
@@ -82,12 +85,18 @@
         class="document-card">
 
         <div class="document-icon">
-          <ion-icon name="document-text-outline"></ion-icon>
+
+          <ion-icon
+            name="document-text-outline">
+          </ion-icon>
+
         </div>
 
         <div class="document-information">
 
-          <h2>{{ document.title }}</h2>
+          <h2>
+            {{ document.title }}
+          </h2>
 
           <p class="document-subject">
             {{ document.subject }}
@@ -114,6 +123,38 @@
             <span>
               {{ formatDate(document.createdAt) }}
             </span>
+
+          </div>
+
+          <!-- Acciones del documento -->
+          <div class="document-actions">
+
+            <!-- Abrir / Descargar -->
+            <ion-button
+              *ngIf="document.fileUrl"
+              size="small"
+              fill="outline"
+              (click)="openDocument(document.fileUrl)">
+
+              Abrir / Descargar
+
+            </ion-button>
+
+            <!-- Eliminar -->
+            <ion-button
+              size="small"
+              fill="outline"
+              color="danger"
+              (click)="confirmDelete(document)">
+
+              <ion-icon
+                slot="start"
+                name="trash-outline">
+              </ion-icon>
+
+              Eliminar
+
+            </ion-button>
 
           </div>
 

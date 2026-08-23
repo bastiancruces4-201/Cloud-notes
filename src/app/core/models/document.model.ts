@@ -6,6 +6,11 @@ export interface DocumentModel {
   fileName: string;
   fileType: string;
   fileSize: number;
+  fileUrl?: string;
+  filePath?: string;
   userId: string;
   createdAt: any;
+  status?: 'active' | 'deleted';
+  deletedAt?: any;
+  deletedBy?: string;
 }

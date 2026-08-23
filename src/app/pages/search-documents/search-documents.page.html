@@ -1,0 +1,131 @@
+<ion-content class="search-page">
+
+  <div class="search-container">
+
+    <header class="page-header">
+      <button
+        type="button"
+        class="back-button"
+        (click)="goBack()"
+        aria-label="Volver al inicio"
+      >
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+
+      <div>
+        <p class="section-label">Cloud Notes</p>
+        <h1>Buscar apuntes</h1>
+      </div>
+    </header>
+
+    <section class="search-card">
+      <div class="search-box">
+        <ion-icon name="search-outline"></ion-icon>
+
+        <ion-input
+          [(ngModel)]="searchTerm"
+          (ionInput)="filterDocuments()"
+          placeholder="Buscar por título, asignatura o archivo"
+          clearInput="true"
+        ></ion-input>
+      </div>
+
+      <p class="results-text" *ngIf="!isLoading">
+        {{ filteredDocuments.length }}
+        {{ filteredDocuments.length === 1 ? 'apunte encontrado' : 'apuntes encontrados' }}
+      </p>
+    </section>
+
+    <div class="loading-state" *ngIf="isLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Cargando apuntes disponibles...</p>
+    </div>
+
+    <section
+      class="empty-state"
+      *ngIf="!isLoading && documents.length === 0"
+    >
+      <div class="empty-icon">
+        <ion-icon name="document-text-outline"></ion-icon>
+      </div>
+
+      <h2>No hay apuntes disponibles</h2>
+
+      <p>
+        Todavía no se han publicado apuntes en la plataforma.
+        Puedes subir el primero desde esta misma pantalla.
+      </p>
+
+      <ion-button
+        class="upload-button"
+        (click)="goToUploadDocument()"
+      >
+        <ion-icon
+          name="cloud-upload-outline"
+          slot="start"
+        ></ion-icon>
+
+        Subir un apunte
+      </ion-button>
+    </section>
+
+    <section
+      class="empty-state"
+      *ngIf="
+        !isLoading &&
+        documents.length > 0 &&
+        filteredDocuments.length === 0
+      "
+    >
+      <div class="empty-icon">
+        <ion-icon name="search-outline"></ion-icon>
+      </div>
+
+      <h2>No encontramos resultados</h2>
+
+      <p>
+        No existen apuntes que coincidan con
+        “{{ searchTerm }}”. Prueba escribiendo otro título,
+        asignatura o nombre de archivo.
+      </p>
+    </section>
+
+    <section
+      class="documents-list"
+      *ngIf="!isLoading && filteredDocuments.length > 0"
+    >
+      <article
+  class="document-card"
+  *ngFor="let document of filteredDocuments"
+  (click)="goToDocumentDetail(document.id)"
+  >
+        <div class="document-icon">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+
+        <div class="document-information">
+          <h2>{{ document.title }}</h2>
+
+          <p class="document-subject">
+            {{ document.subject }}
+          </p>
+
+          <p
+            class="document-description"
+            *ngIf="document.description"
+          >
+            {{ document.description }}
+          </p>
+
+          <div class="document-details">
+            <span>{{ document.fileName }}</span>
+            <span>{{ formatFileSize(document.fileSize) }}</span>
+            <span>{{ formatDate(document.createdAt) }}</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+  </div>
+
+</ion-content>

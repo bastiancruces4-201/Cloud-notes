@@ -1,0 +1,41 @@
+<ion-content [fullscreen]="true" class="verify-page">
+
+  <div class="verify-container">
+
+    <div class="verify-card">
+
+      <div class="status-icon success-icon">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+      </div>
+
+      <h1>Verificación completada</h1>
+
+      <p>
+        El proceso de verificación de correo ha finalizado.
+        Ya puedes iniciar sesión en Cloud Notes.
+      </p>
+
+      <ion-button
+        expand="block"
+        class="primary-button"
+        (click)="goToLogin()">
+
+        Ir a iniciar sesión
+
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        fill="clear"
+        class="secondary-button"
+        (click)="goToWelcome()">
+
+        Volver al inicio
+
+      </ion-button>
+
+    </div>
+
+  </div>
+
+</ion-content>

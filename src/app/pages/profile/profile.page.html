@@ -1,0 +1,247 @@
+<ion-content [fullscreen]="true" class="profile-page">
+
+  <div class="profile-container">
+
+    <header class="page-header">
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="goBack()">
+
+        <ion-icon name="arrow-back-outline"></ion-icon>
+
+      </button>
+
+      <div>
+        <p class="section-label">Cloud Notes</p>
+        <h1>Mi perfil</h1>
+      </div>
+
+    </header>
+
+    <section
+      *ngIf="isLoading"
+      class="loading-state">
+
+      <ion-spinner name="crescent"></ion-spinner>
+
+      <p>Cargando información del perfil...</p>
+
+    </section>
+
+    <section
+      *ngIf="!isLoading && userProfile"
+      class="profile-card">
+
+      <div class="profile-top">
+
+        <div class="profile-avatar">
+          {{ getInitials() }}
+        </div>
+
+        <div class="profile-name">
+
+          <h2>
+            {{ userProfile.name }}
+            {{ userProfile.lastName }}
+          </h2>
+
+          <div
+            class="verified-badge"
+            *ngIf="emailVerified">
+
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+
+            <span>Correo verificado</span>
+
+          </div>
+
+          <div
+            class="pending-badge"
+            *ngIf="!emailVerified">
+
+            <span>Correo pendiente de verificación</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- MODO NORMAL -->
+      <div
+        *ngIf="!isEditing"
+        class="profile-details">
+
+        <div class="profile-item">
+
+          <div class="item-icon">
+            <ion-icon name="mail-outline"></ion-icon>
+          </div>
+
+          <div>
+            <span class="item-label">Correo</span>
+            <p>{{ email }}</p>
+          </div>
+
+        </div>
+
+        <div class="profile-item">
+
+          <div class="item-icon">
+            <ion-icon name="school-outline"></ion-icon>
+          </div>
+
+          <div>
+            <span class="item-label">Universidad</span>
+            <p>{{ userProfile.university }}</p>
+          </div>
+
+        </div>
+
+        <div class="profile-item">
+
+          <div class="item-icon">
+            <ion-icon name="book-outline"></ion-icon>
+          </div>
+
+          <div>
+            <span class="item-label">Carrera</span>
+            <p>{{ userProfile.career }}</p>
+          </div>
+
+        </div>
+
+        <div class="profile-item">
+
+          <div class="item-icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
+
+          <div>
+            <span class="item-label">Nombre completo</span>
+            <p>
+              {{ userProfile.name }}
+              {{ userProfile.lastName }}
+            </p>
+          </div>
+
+        </div>
+
+        <ion-button
+          expand="block"
+          class="edit-button"
+          (click)="startEditing()">
+
+          <ion-icon
+            slot="start"
+            name="create-outline">
+          </ion-icon>
+
+          Editar perfil
+
+        </ion-button>
+
+      </div>
+
+      <!-- MODO EDICIÓN -->
+      <div
+        *ngIf="isEditing"
+        class="edit-profile">
+
+        <ion-item
+          lines="none"
+          class="edit-item">
+
+          <ion-label position="stacked">
+            Nombre
+          </ion-label>
+
+          <ion-input
+            [(ngModel)]="editName">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item
+          lines="none"
+          class="edit-item">
+
+          <ion-label position="stacked">
+            Apellido
+          </ion-label>
+
+          <ion-input
+            [(ngModel)]="editLastName">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item
+          lines="none"
+          class="edit-item">
+
+          <ion-label position="stacked">
+            Universidad
+          </ion-label>
+
+          <ion-input
+            [(ngModel)]="editUniversity">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item
+          lines="none"
+          class="edit-item">
+
+          <ion-label position="stacked">
+            Carrera
+          </ion-label>
+
+          <ion-input
+            [(ngModel)]="editCareer">
+          </ion-input>
+
+        </ion-item>
+
+        <div class="edit-actions">
+
+          <ion-button
+            fill="outline"
+            color="medium"
+            (click)="cancelEditing()"
+            [disabled]="isSaving">
+
+            <ion-icon
+              slot="start"
+              name="close-outline">
+            </ion-icon>
+
+            Cancelar
+
+          </ion-button>
+
+          <ion-button
+            (click)="saveProfile()"
+            [disabled]="isSaving">
+
+            <ion-icon
+              slot="start"
+              name="save-outline">
+            </ion-icon>
+
+            {{ isSaving ? 'Guardando...' : 'Guardar cambios' }}
+
+          </ion-button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</ion-content>

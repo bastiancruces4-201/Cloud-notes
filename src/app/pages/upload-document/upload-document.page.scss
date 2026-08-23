@@ -104,8 +104,16 @@
 .form-item ion-textarea,
 .form-item ion-select {
   --color: #1e293b;
-  --placeholder-color: #94a3b8;
+  --placeholder-color: #0c0d0f;
   --placeholder-opacity: 1;
+}
+.form-item ion-select::part(text) {
+  color: #1e293b;
+}
+
+.form-item ion-select::part(placeholder) {
+  color: #64748b;
+  opacity: 1;
 }
 .file-section {
   margin-top: 8px;

@@ -77,20 +77,21 @@ export class HomePage implements OnInit {
   await this.router.navigate(['/my-documents']);
   }
 
-  goToUploadDocument() {
-    console.log('Ir a Subir apunte');
+  async goToUploadDocument() {
+  await this.router.navigate(['/upload-document']);
   }
 
-  goToSearchDocuments() {
-    console.log('Ir a Buscar apuntes');
+  async goToSearchDocuments() {
+  await this.router.navigate(['/search-documents']);
   }
 
-  goToProfile() {
-    console.log('Ir a Mi perfil');
-  }
+  async goToProfile() {
+  await this.router.navigate(['/profile']);
+}
 
   async logout() {
     await this.authService.logout();
     await this.router.navigate(['/login']);
   }
 }
+

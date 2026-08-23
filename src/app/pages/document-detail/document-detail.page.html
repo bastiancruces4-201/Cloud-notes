@@ -1,0 +1,514 @@
+<ion-content
+  [fullscreen]="true"
+  class="detail-page">
+
+  <div class="detail-container">
+
+    <header class="page-header">
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="goBack()">
+
+        <ion-icon
+          name="arrow-back-outline">
+        </ion-icon>
+
+      </button>
+
+      <div>
+        <p class="section-label">
+          Cloud Notes
+        </p>
+
+        <h1>Detalle del apunte</h1>
+      </div>
+
+    </header>
+
+    <!-- Cargando -->
+    <section
+      *ngIf="isLoading"
+      class="loading-state">
+
+      <ion-spinner
+        name="crescent">
+      </ion-spinner>
+
+      <p>
+        Cargando información del apunte...
+      </p>
+
+    </section>
+
+    <!-- Contenido principal -->
+    <ng-container
+      *ngIf="!isLoading && document">
+
+      <!-- DETALLE DEL APUNTE -->
+      <section class="detail-card">
+
+        <div class="document-heading">
+
+          <div class="document-icon">
+            <ion-icon
+              name="document-text-outline">
+            </ion-icon>
+          </div>
+
+          <div>
+
+            <h2>
+              {{ document.title }}
+            </h2>
+
+            <p class="subject">
+              {{ document.subject }}
+            </p>
+
+          </div>
+
+        </div>
+
+        <div
+          *ngIf="document.description"
+          class="description-section">
+
+          <h3>Descripción</h3>
+
+          <p>
+            {{ document.description }}
+          </p>
+
+        </div>
+
+        <div class="document-information">
+
+          <div class="information-item">
+
+            <ion-icon
+              name="school-outline">
+            </ion-icon>
+
+            <div>
+              <span>Asignatura</span>
+
+              <p>
+                {{ document.subject }}
+              </p>
+            </div>
+
+          </div>
+
+          <div class="information-item">
+
+            <ion-icon
+              name="calendar-outline">
+            </ion-icon>
+
+            <div>
+
+              <span>
+                Fecha de publicación
+              </span>
+
+              <p>
+                {{ formatDate(document.createdAt) }}
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="information-item">
+
+            <ion-icon
+              name="document-text-outline">
+            </ion-icon>
+
+            <div>
+
+              <span>Archivo</span>
+
+              <p>
+                {{ document.fileName }}
+              </p>
+
+              <small>
+                {{ formatFileSize(document.fileSize) }}
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <ion-button
+          *ngIf="document.fileUrl"
+          expand="block"
+          class="download-button"
+          (click)="openDocument()">
+
+          <ion-icon
+            name="download-outline"
+            slot="start">
+          </ion-icon>
+
+          Abrir / Descargar apunte
+
+        </ion-button>
+
+      </section>
+
+
+      <!-- RESUMEN DE CALIFICACIONES -->
+      <section class="social-card">
+
+        <div class="social-heading">
+
+          <div>
+
+            <p class="social-label">
+              Comunidad
+            </p>
+
+            <h2>
+              Calificaciones
+            </h2>
+
+          </div>
+
+        </div>
+
+        <div class="rating-summary">
+
+          <div class="average-rating">
+
+            <strong>
+              {{ averageRating | number:'1.1-1' }}
+            </strong>
+
+            <span>
+              de 5
+            </span>
+
+          </div>
+
+          <div>
+
+            <div class="average-stars">
+
+              <ion-icon
+                *ngFor="let starNumber of [1,2,3,4,5]"
+                [name]="
+                  averageRating >= starNumber
+                    ? 'star'
+                    : 'star-outline'
+                ">
+              </ion-icon>
+
+            </div>
+
+            <p class="rating-count">
+
+              {{ reviews.length }}
+
+              {{
+                reviews.length === 1
+                  ? 'opinión'
+                  : 'opiniones'
+              }}
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- CREAR O EDITAR OPINIÓN -->
+      <section
+        *ngIf="!currentUserReview || isEditingReview"
+        class="social-card">
+
+        <div class="social-heading">
+
+          <div>
+
+            <p class="social-label">
+              Tu participación
+            </p>
+
+            <h2>
+              {{
+                currentUserReview
+                  ? 'Editar mi opinión'
+                  : 'Califica este apunte'
+              }}
+            </h2>
+
+          </div>
+
+        </div>
+
+        <div class="rate-document">
+
+          <h3>
+            Selecciona tu calificación
+          </h3>
+
+          <div class="rating-selector">
+
+            <button
+              type="button"
+              *ngFor="let starNumber of [1,2,3,4,5]"
+              (click)="selectRating(starNumber)"
+              [attr.aria-label]="
+                'Calificar con ' +
+                starNumber +
+                ' estrellas'
+              ">
+
+              <ion-icon
+                [name]="
+                  selectedRating >= starNumber
+                    ? 'star'
+                    : 'star-outline'
+                ">
+              </ion-icon>
+
+            </button>
+
+            <span
+              *ngIf="selectedRating > 0"
+              class="selected-rating-number">
+
+              {{ selectedRating }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="comment-form">
+
+          <label class="review-label">
+            Comentario
+          </label>
+
+          <ion-textarea
+            [(ngModel)]="reviewComment"
+            placeholder="Escribe tu opinión sobre este apunte..."
+            [autoGrow]="true"
+            maxlength="500">
+          </ion-textarea>
+
+          <div class="comment-actions">
+
+            <span>
+              {{ reviewComment.length }}/500
+            </span>
+
+            <div class="review-form-buttons">
+
+              <ion-button
+                *ngIf="currentUserReview"
+                fill="outline"
+                color="medium"
+                (click)="cancelEditingReview()"
+                [disabled]="isSavingReview">
+
+                <ion-icon
+                  name="close-outline"
+                  slot="start">
+                </ion-icon>
+
+                Cancelar
+
+              </ion-button>
+
+              <ion-button
+                (click)="saveReview()"
+                [disabled]="
+                  selectedRating === 0 ||
+                  !reviewComment.trim() ||
+                  isSavingReview
+                ">
+
+                <ion-icon
+                  name="send-outline"
+                  slot="start">
+                </ion-icon>
+
+                {{
+                  isSavingReview
+                    ? 'Guardando...'
+                    : (
+                        currentUserReview
+                          ? 'Guardar cambios'
+                          : 'Publicar opinión'
+                      )
+                }}
+
+              </ion-button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- OPINIONES DE LA COMUNIDAD -->
+      <section class="social-card">
+
+        <div class="social-heading">
+
+          <div>
+
+            <p class="social-label">
+              Comunidad
+            </p>
+
+            <h2>
+              Opiniones
+            </h2>
+
+          </div>
+
+          <div class="comments-count">
+
+            <ion-icon
+              name="chatbubble-outline">
+            </ion-icon>
+
+            <span>
+              {{ reviews.length }}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- Sin opiniones -->
+        <div
+          *ngIf="reviews.length === 0"
+          class="no-comments">
+
+          <ion-icon
+            name="chatbubble-outline">
+          </ion-icon>
+
+          <h3>
+            Todavía no hay opiniones
+          </h3>
+
+          <p>
+            Sé el primero en calificar y comentar este apunte.
+          </p>
+
+        </div>
+
+
+        <!-- Lista de opiniones -->
+        <div
+          *ngIf="reviews.length > 0"
+          class="comments-list">
+
+          <article
+            *ngFor="let review of reviews"
+            class="comment-card">
+
+            <div class="comment-avatar">
+
+              {{
+                review.userName
+                  ? review.userName.charAt(0).toUpperCase()
+                  : 'U'
+              }}
+
+            </div>
+
+            <div class="comment-content">
+
+              <div class="comment-header">
+
+                <div>
+
+                  <strong>
+                    {{ review.userName }}
+                  </strong>
+
+                  <span class="review-date">
+                    {{
+                      formatDate(
+                        review.updatedAt || review.createdAt
+                      )
+                    }}
+                  </span>
+
+                </div>
+
+                <ion-button
+                  *ngIf="isMyReview(review)"
+                  size="small"
+                  fill="clear"
+                  class="edit-review-button"
+                  (click)="startEditingReview()">
+
+                  <ion-icon
+                    name="create-outline"
+                    slot="start">
+                  </ion-icon>
+
+                  Editar
+
+                </ion-button>
+
+              </div>
+<!-- Calificación del usuario -->
+<div class="review-rating">
+
+  <span class="review-stars-text">
+    {{ getStars(review.rating) }}
+  </span>
+
+  <span class="review-rating-number">
+    {{ review.rating }}
+  </span>
+
+  <span class="review-rating-text">
+    {{
+      review.rating === 1
+        ? 'estrella'
+        : 'estrellas'
+    }}
+  </span>
+</div>
+
+              <!-- Comentario -->
+              <p>
+                {{ review.comment }}
+              </p>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+    </ng-container>
+
+  </div>
+
+</ion-content>
