@@ -148,4 +148,69 @@ export class DocumentService {
     id: documentSnapshot.id,
     ...documentSnapshot.data()
   } as DocumentModel;
-}}
+}
+async getRecentDocuments(
+  limitAmount: number = 6
+): Promise<DocumentModel[]> {
+
+  const documentsRef = collection(
+    this.firestore,
+    'documents'
+  );
+
+  const documentsQuery = query(
+    documentsRef,
+    orderBy('createdAt', 'desc')
+  );
+
+  const documentsSnapshot =
+    await getDocs(documentsQuery);
+
+  const documents =
+    documentsSnapshot.docs.map(
+      documentSnapshot => ({
+        id: documentSnapshot.id,
+        ...documentSnapshot.data()
+      } as DocumentModel)
+    );
+
+  return documents
+    .filter(
+      document =>
+        document.status !== 'deleted'
+    )
+    .slice(0, limitAmount);
+}
+
+async getDocumentsBySubject(
+  subject: string
+): Promise<DocumentModel[]> {
+
+  const documentsRef = collection(
+    this.firestore,
+    'documents'
+  );
+
+  const documentsQuery = query(
+    documentsRef,
+    where('subject', '==', subject),
+    orderBy('createdAt', 'desc')
+  );
+
+  const documentsSnapshot =
+    await getDocs(documentsQuery);
+
+  const documents =
+    documentsSnapshot.docs.map(
+      documentSnapshot => ({
+        id: documentSnapshot.id,
+        ...documentSnapshot.data()
+      } as DocumentModel)
+    );
+
+  return documents.filter(
+    document =>
+      document.status !== 'deleted'
+  );
+}
+}

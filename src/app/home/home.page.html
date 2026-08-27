@@ -1,101 +1,201 @@
-<ion-content [fullscreen]="true" class="home-page">
+<ion-content
+  [fullscreen]="true"
+  class="home-page">
 
   <div class="dashboard-container">
 
-    <div *ngIf="loading" class="loading-container">
+    <!-- CARGANDO -->
+    <div
+      *ngIf="loading"
+      class="loading-container">
+
       <ion-spinner name="crescent"></ion-spinner>
-      <p>Cargando información...</p>
+
+      <p>
+        Cargando Cloud Notes...
+      </p>
+
     </div>
 
+
+    <!-- CONTENIDO -->
     <div *ngIf="!loading">
 
+      <!-- ENCABEZADO -->
       <header class="dashboard-header">
 
         <div>
-          <p class="welcome-text">Bienvenido a</p>
-          <h1>Cloud Notes</h1>
+
+          <p class="welcome-text">
+            Bienvenido a
+          </p>
+
+          <h1>
+            Cloud Notes
+          </h1>
+
         </div>
 
-        <div class="user-avatar">
-          {{ userProfile?.name?.charAt(0) || 'U' }}
-        </div>
+        <button
+          type="button"
+          class="user-avatar"
+          (click)="goToProfile()">
+
+          {{
+            userProfile?.name?.charAt(0)?.toUpperCase()
+            || 'U'
+          }}
+
+        </button>
 
       </header>
 
-      <section class="user-card">
 
-        <p class="greeting">
-          Hola, {{ userProfile?.name || 'usuario' }} 👋
-        </p>
+      <!-- BIENVENIDA -->
+      <section class="welcome-card">
 
-        <p class="career">
-          {{ userProfile?.career || 'Carrera no registrada' }}
-        </p>
+        <div class="welcome-information">
 
-        <p class="university">
-          {{ userProfile?.university || 'Universidad no registrada' }}
-        </p>
+          <p class="welcome-small">
+            Biblioteca académica
+          </p>
+
+          <h2>
+            Hola, {{ userProfile?.name || 'usuario' }} 👋
+          </h2>
+
+          <p>
+            Encuentra apuntes, libros y material académico
+            compartido por estudiantes.
+          </p>
+
+          <ion-button
+            class="main-search-button"
+            (click)="goToSearchDocuments()">
+
+            <ion-icon
+              name="search-outline"
+              slot="start">
+            </ion-icon>
+
+            Buscar apuntes
+
+          </ion-button>
+
+        </div>
+
+        <div class="welcome-decoration">
+
+          <ion-icon
+            name="school-outline">
+          </ion-icon>
+
+        </div>
 
       </section>
 
-      <section class="menu-section">
 
-        <h2>¿Qué deseas hacer?</h2>
+      <!-- ACCIONES RÁPIDAS -->
+      <section class="home-section">
 
-        <div class="menu-grid">
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-label">
+              Acceso rápido
+            </p>
+
+            <h2>
+              ¿Qué deseas hacer?
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="quick-actions">
 
           <button
             type="button"
-            class="menu-card"
+            class="quick-action-card"
             (click)="goToMyDocuments()">
 
-            <ion-icon name="folder-outline"></ion-icon>
+            <div class="quick-action-icon">
+
+              <ion-icon
+                name="folder-outline">
+              </ion-icon>
+
+            </div>
 
             <div>
-              <h3>Mis apuntes</h3>
-              <p>Administra tus documentos académicos.</p>
+
+              <h3>
+                Mis apuntes
+              </h3>
+
+              <p>
+                Administra tus archivos.
+              </p>
+
             </div>
 
           </button>
 
+
           <button
             type="button"
-            class="menu-card"
+            class="quick-action-card"
             (click)="goToUploadDocument()">
 
-            <ion-icon name="cloud-upload-outline"></ion-icon>
+            <div class="quick-action-icon">
+
+              <ion-icon
+                name="cloud-upload-outline">
+              </ion-icon>
+
+            </div>
 
             <div>
-              <h3>Subir apunte</h3>
-              <p>Comparte archivos con otros estudiantes.</p>
+
+              <h3>
+                Subir apunte
+              </h3>
+
+              <p>
+                Comparte material académico.
+              </p>
+
             </div>
 
           </button>
 
-          <button
-            type="button"
-            class="menu-card"
-            (click)="goToSearchDocuments()">
-
-            <ion-icon name="search-outline"></ion-icon>
-
-            <div>
-              <h3>Buscar apuntes</h3>
-              <p>Encuentra material por asignatura.</p>
-            </div>
-
-          </button>
 
           <button
             type="button"
-            class="menu-card"
+            class="quick-action-card"
             (click)="goToProfile()">
 
-            <ion-icon name="person-outline"></ion-icon>
+            <div class="quick-action-icon">
+
+              <ion-icon
+                name="person-outline">
+              </ion-icon>
+
+            </div>
 
             <div>
-              <h3>Mi perfil</h3>
-              <p>Consulta tus datos personales.</p>
+
+              <h3>
+                Mi perfil
+              </h3>
+
+              <p>
+                Consulta y edita tus datos.
+              </p>
+
             </div>
 
           </button>
@@ -104,6 +204,398 @@
 
       </section>
 
+     <!-- TENDENCIAS -->
+      <section class="home-section">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-label">
+              Comunidad
+            </p>
+
+            <h2>
+              Tendencias
+            </h2>
+
+          </div>
+
+          <button
+            type="button"
+            class="view-all-button"
+            (click)="goToSearchDocuments()">
+
+            Ver todos
+
+          </button>
+
+        </div>
+
+
+        <!-- Sin tendencias -->
+        <div
+          *ngIf="trendingDocuments.length === 0"
+          class="empty-documents">
+
+          <ion-icon
+            name="star-outline">
+          </ion-icon>
+
+          <h3>
+            Todavía no hay tendencias
+          </h3>
+
+          <p>
+            Los apuntes mejor valorados aparecerán aquí
+            cuando los estudiantes comiencen a calificarlos.
+          </p>
+
+        </div>
+
+
+        <!-- Tendencias disponibles -->
+        <div
+          *ngIf="trendingDocuments.length > 0"
+          class="trending-grid">
+
+          <article
+            *ngFor="
+              let item of trendingDocuments;
+              let i = index
+            "
+            class="trending-card"
+            (click)="
+              goToDocumentDetail(
+                item.document.id
+              )
+            ">
+
+            <div class="trending-position">
+
+              #{{ i + 1 }}
+
+            </div>
+
+
+            <div class="trending-cover">
+
+              <ion-icon
+                name="document-text-outline">
+              </ion-icon>
+
+            </div>
+
+
+            <div class="trending-information">
+
+              <p class="trending-subject">
+
+                {{ item.document.subject }}
+
+              </p>
+
+              <h3>
+
+                {{ item.document.title }}
+
+              </h3>
+
+
+              <div class="trending-rating">
+
+                <span class="trending-stars">
+
+                  {{
+                    getStars(
+                      item.averageRating
+                    )
+                  }}
+
+                </span>
+
+                <strong>
+
+                  {{
+                    item.averageRating
+                      | number:'1.1-1'
+                  }}
+
+                </strong>
+
+              </div>
+
+
+              <p class="trending-reviews">
+
+                {{ item.reviewCount }}
+
+                {{
+                  item.reviewCount === 1
+                    ? 'opinión'
+                    : 'opiniones'
+                }}
+
+              </p>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+            <!-- ÚLTIMOS APUNTES -->
+      <section class="home-section">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-label">
+              Novedades
+            </p>
+
+            <h2>
+              Últimos apuntes
+            </h2>
+
+          </div>
+
+          <button
+            type="button"
+            class="view-all-button"
+            (click)="goToSearchDocuments()">
+
+            Ver todos
+
+          </button>
+
+        </div>
+
+
+        <!-- Sin documentos -->
+        <div
+          *ngIf="recentDocuments.length === 0"
+          class="empty-documents">
+
+          <ion-icon
+            name="document-text-outline">
+          </ion-icon>
+
+          <h3>
+            Todavía no hay apuntes
+          </h3>
+
+          <p>
+            Cuando los estudiantes comiencen a compartir
+            material, aparecerá aquí.
+          </p>
+
+        </div>
+
+
+        <!-- Documentos recientes -->
+        <div
+          *ngIf="recentDocuments.length > 0"
+          class="recent-documents-grid">
+
+          <article
+            *ngFor="let document of recentDocuments"
+            class="recent-document-card"
+            (click)="
+              goToDocumentDetail(
+                document.id
+              )
+            ">
+
+            <div class="document-cover">
+
+              <div class="document-cover-icon">
+
+                <ion-icon
+                  name="document-text-outline">
+                </ion-icon>
+
+              </div>
+
+              <span class="document-type">
+
+                {{
+                  document.fileType === 'application/pdf'
+                    ? 'PDF'
+                    : 'Documento'
+                }}
+
+              </span>
+
+            </div>
+
+
+            <div class="recent-document-information">
+
+              <p class="recent-document-subject">
+
+                {{ document.subject }}
+
+              </p>
+
+              <h3>
+
+                {{ document.title }}
+
+              </h3>
+
+              <p
+                *ngIf="document.description"
+                class="recent-document-description">
+
+                {{ document.description }}
+
+              </p>
+
+
+              <div class="document-footer">
+
+                <span>
+
+                  {{ document.fileName }}
+
+                </span>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+      <!-- EXPLORAR POR ASIGNATURA -->
+      <section class="home-section">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-label">
+              Biblioteca
+            </p>
+
+            <h2>
+              Explorar por asignatura
+            </h2>
+
+          </div>
+
+          <button
+            type="button"
+            class="view-all-button"
+            (click)="goToSearchDocuments()">
+
+            Ver todo
+
+          </button>
+
+        </div>
+
+
+        <div class="subjects-grid">
+
+          <button
+            type="button"
+            *ngFor="let subject of subjectCategories"
+            class="subject-card"
+            (click)="goToSubject(subject.name)">
+
+            <div class="subject-icon">
+
+              <ion-icon
+                [name]="subject.icon">
+              </ion-icon>
+
+            </div>
+
+            <div class="subject-information">
+
+              <h3>
+                {{ subject.name }}
+              </h3>
+
+              <p>
+
+                {{ subject.count }}
+
+                {{
+                  subject.count === 1
+                    ? 'apunte disponible'
+                    : 'apuntes disponibles'
+                }}
+
+              </p>
+
+            </div>
+
+            <div class="subject-arrow">
+              →
+            </div>
+
+          </button>
+
+        </div>
+
+      </section>
+
+      <!-- INFORMACIÓN DEL USUARIO -->
+      <section class="account-summary">
+
+        <div>
+
+          <p class="account-label">
+            Tu cuenta
+          </p>
+
+          <h3>
+
+            {{
+              userProfile?.career
+              || 'Carrera no registrada'
+            }}
+
+          </h3>
+
+          <p>
+
+            {{
+              userProfile?.university
+              || 'Universidad no registrada'
+            }}
+
+          </p>
+
+        </div>
+
+        <ion-button
+          fill="outline"
+          class="profile-button"
+          (click)="goToProfile()">
+
+          <ion-icon
+            name="person-outline"
+            slot="start">
+          </ion-icon>
+
+          Ver perfil
+
+        </ion-button>
+
+      </section>
+
+
+      <!-- CERRAR SESIÓN -->
       <ion-button
         expand="block"
         fill="outline"

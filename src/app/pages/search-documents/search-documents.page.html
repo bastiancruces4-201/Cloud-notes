@@ -3,53 +3,131 @@
   <div class="search-container">
 
     <header class="page-header">
+
       <button
         type="button"
         class="back-button"
         (click)="goBack()"
-        aria-label="Volver al inicio"
-      >
-        <ion-icon name="arrow-back-outline"></ion-icon>
+        aria-label="Volver al inicio">
+
+        <ion-icon
+          name="arrow-back-outline">
+        </ion-icon>
+
       </button>
 
       <div>
-        <p class="section-label">Cloud Notes</p>
-        <h1>Buscar apuntes</h1>
+
+        <p class="section-label">
+          Cloud Notes
+        </p>
+
+        <h1>
+          Buscar apuntes
+        </h1>
+
       </div>
+
     </header>
 
+
+    <!-- BUSCADOR Y FILTRO -->
     <section class="search-card">
+
+      <!-- Filtro activo por asignatura -->
+      <div
+        class="active-filter"
+        *ngIf="selectedSubject">
+
+        <span>
+          Filtrando por:
+          <strong>
+            {{ selectedSubject }}
+          </strong>
+        </span>
+
+        <button
+          type="button"
+          class="clear-filter-button"
+          (click)="clearSubjectFilter()">
+
+          Quitar filtro
+
+        </button>
+
+      </div>
+
+
+      <!-- Campo de búsqueda -->
       <div class="search-box">
-        <ion-icon name="search-outline"></ion-icon>
+
+        <ion-icon
+          name="search-outline">
+        </ion-icon>
 
         <ion-input
           [(ngModel)]="searchTerm"
           (ionInput)="filterDocuments()"
           placeholder="Buscar por título, asignatura o archivo"
-          clearInput="true"
-        ></ion-input>
+          clearInput="true">
+        </ion-input>
+
       </div>
 
-      <p class="results-text" *ngIf="!isLoading">
+
+      <!-- Número de resultados -->
+      <p
+        class="results-text"
+        *ngIf="!isLoading">
+
         {{ filteredDocuments.length }}
-        {{ filteredDocuments.length === 1 ? 'apunte encontrado' : 'apuntes encontrados' }}
+
+        {{
+          filteredDocuments.length === 1
+            ? 'apunte encontrado'
+            : 'apuntes encontrados'
+        }}
+
       </p>
+
     </section>
 
-    <div class="loading-state" *ngIf="isLoading">
-      <ion-spinner name="crescent"></ion-spinner>
-      <p>Cargando apuntes disponibles...</p>
+
+    <!-- CARGANDO -->
+    <div
+      class="loading-state"
+      *ngIf="isLoading">
+
+      <ion-spinner
+        name="crescent">
+      </ion-spinner>
+
+      <p>
+        Cargando apuntes disponibles...
+      </p>
+
     </div>
 
+
+    <!-- NO HAY NINGÚN APUNTE EN LA PLATAFORMA -->
     <section
       class="empty-state"
-      *ngIf="!isLoading && documents.length === 0"
-    >
+      *ngIf="
+        !isLoading &&
+        documents.length === 0
+      ">
+
       <div class="empty-icon">
-        <ion-icon name="document-text-outline"></ion-icon>
+
+        <ion-icon
+          name="document-text-outline">
+        </ion-icon>
+
       </div>
 
-      <h2>No hay apuntes disponibles</h2>
+      <h2>
+        No hay apuntes disponibles
+      </h2>
 
       <p>
         Todavía no se han publicado apuntes en la plataforma.
@@ -58,53 +136,106 @@
 
       <ion-button
         class="upload-button"
-        (click)="goToUploadDocument()"
-      >
+        (click)="goToUploadDocument()">
+
         <ion-icon
           name="cloud-upload-outline"
-          slot="start"
-        ></ion-icon>
+          slot="start">
+        </ion-icon>
 
         Subir un apunte
+
       </ion-button>
+
     </section>
 
+
+    <!-- NO HAY RESULTADOS PARA LA BÚSQUEDA -->
     <section
       class="empty-state"
       *ngIf="
         !isLoading &&
         documents.length > 0 &&
         filteredDocuments.length === 0
-      "
-    >
+      ">
+
       <div class="empty-icon">
-        <ion-icon name="search-outline"></ion-icon>
+
+        <ion-icon
+          name="search-outline">
+        </ion-icon>
+
       </div>
 
-      <h2>No encontramos resultados</h2>
+      <h2>
+        No encontramos resultados
+      </h2>
 
-      <p>
+      <!-- Sin filtro de asignatura -->
+      <p *ngIf="!selectedSubject">
+
         No existen apuntes que coincidan con
-        “{{ searchTerm }}”. Prueba escribiendo otro título,
+        “{{ searchTerm }}”.
+
+        Prueba escribiendo otro título,
         asignatura o nombre de archivo.
+
       </p>
+
+      <!-- Con filtro de asignatura -->
+      <p *ngIf="selectedSubject">
+
+        No encontramos apuntes de
+
+        <strong>
+          {{ selectedSubject }}
+        </strong>
+
+        que coincidan con tu búsqueda.
+
+      </p>
+
+      <ion-button
+        *ngIf="selectedSubject"
+        fill="outline"
+        class="remove-filter-button"
+        (click)="clearSubjectFilter()">
+
+        Quitar filtro de
+        {{ selectedSubject }}
+
+      </ion-button>
+
     </section>
 
+
+    <!-- LISTA DE DOCUMENTOS -->
     <section
       class="documents-list"
-      *ngIf="!isLoading && filteredDocuments.length > 0"
-    >
+      *ngIf="
+        !isLoading &&
+        filteredDocuments.length > 0
+      ">
+
       <article
-  class="document-card"
-  *ngFor="let document of filteredDocuments"
-  (click)="goToDocumentDetail(document.id)"
-  >
+        class="document-card"
+        *ngFor="let document of filteredDocuments"
+        (click)="goToDocumentDetail(document.id)">
+
         <div class="document-icon">
-          <ion-icon name="document-text-outline"></ion-icon>
+
+          <ion-icon
+            name="document-text-outline">
+          </ion-icon>
+
         </div>
 
+
         <div class="document-information">
-          <h2>{{ document.title }}</h2>
+
+          <h2>
+            {{ document.title }}
+          </h2>
 
           <p class="document-subject">
             {{ document.subject }}
@@ -112,18 +243,32 @@
 
           <p
             class="document-description"
-            *ngIf="document.description"
-          >
+            *ngIf="document.description">
+
             {{ document.description }}
+
           </p>
 
           <div class="document-details">
-            <span>{{ document.fileName }}</span>
-            <span>{{ formatFileSize(document.fileSize) }}</span>
-            <span>{{ formatDate(document.createdAt) }}</span>
+
+            <span>
+              {{ document.fileName }}
+            </span>
+
+            <span>
+              {{ formatFileSize(document.fileSize) }}
+            </span>
+
+            <span>
+              {{ formatDate(document.createdAt) }}
+            </span>
+
           </div>
+
         </div>
+
       </article>
+
     </section>
 
   </div>

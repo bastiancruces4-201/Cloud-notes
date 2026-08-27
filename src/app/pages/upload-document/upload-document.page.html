@@ -29,26 +29,46 @@
         </div>
 
         <div>
-          <h2>Información del documento</h2>
+
+          <h2>
+            Información del documento
+          </h2>
+
           <p>
-            Completa los datos y selecciona el archivo académico que deseas
-            compartir.
+            Completa los datos y selecciona el archivo académico
+            que deseas compartir.
           </p>
+
         </div>
 
       </div>
 
-      <ion-item lines="none" class="form-item">
-        <ion-label position="stacked">Título del apunte</ion-label>
+
+      <!-- TÍTULO -->
+      <ion-item
+        lines="none"
+        class="form-item">
+
+        <ion-label position="stacked">
+          Título del apunte
+        </ion-label>
 
         <ion-input
           [(ngModel)]="title"
           placeholder="Ejemplo: Guía de programación">
         </ion-input>
+
       </ion-item>
 
-      <ion-item lines="none" class="form-item">
-        <ion-label position="stacked">Asignatura</ion-label>
+
+      <!-- ASIGNATURA -->
+      <ion-item
+        lines="none"
+        class="form-item">
+
+        <ion-label position="stacked">
+          Asignatura
+        </ion-label>
 
         <ion-select
           [(ngModel)]="subject"
@@ -58,20 +78,48 @@
             Programación
           </ion-select-option>
 
-          <ion-select-option value="Bases de Datos">
-            Bases de Datos
-          </ion-select-option>
-
           <ion-select-option value="Matemáticas">
             Matemáticas
+          </ion-select-option>
+
+          <ion-select-option value="Ciberseguridad">
+            Ciberseguridad
+          </ion-select-option>
+
+          <ion-select-option value="Base de Datos">
+            Base de Datos
           </ion-select-option>
 
           <ion-select-option value="Redes">
             Redes
           </ion-select-option>
 
-          <ion-select-option value="Ciberseguridad">
-            Ciberseguridad
+          <ion-select-option value="Ingeniería de Software">
+            Ingeniería de Software
+          </ion-select-option>
+
+          <ion-select-option value="Inteligencia Artificial">
+            Inteligencia Artificial
+          </ion-select-option>
+
+          <ion-select-option value="Desarrollo Web">
+            Desarrollo Web
+          </ion-select-option>
+
+          <ion-select-option value="Estadística">
+            Estadística
+          </ion-select-option>
+
+          <ion-select-option value="Física">
+            Física
+          </ion-select-option>
+
+          <ion-select-option value="Contabilidad">
+            Contabilidad
+          </ion-select-option>
+
+          <ion-select-option value="Finanzas">
+            Finanzas
           </ion-select-option>
 
           <ion-select-option value="Otra">
@@ -79,10 +127,18 @@
           </ion-select-option>
 
         </ion-select>
+
       </ion-item>
 
-      <ion-item lines="none" class="form-item">
-        <ion-label position="stacked">Descripción</ion-label>
+
+      <!-- DESCRIPCIÓN -->
+      <ion-item
+        lines="none"
+        class="form-item">
+
+        <ion-label position="stacked">
+          Descripción
+        </ion-label>
 
         <ion-textarea
           [(ngModel)]="description"
@@ -90,17 +146,31 @@
           maxlength="300"
           placeholder="Describe brevemente el contenido del archivo">
         </ion-textarea>
+
       </ion-item>
 
+
+      <!-- ARCHIVO -->
       <div class="file-section">
 
-        <label for="documentFile" class="file-selector">
+        <label
+          for="documentFile"
+          class="file-selector">
 
-          <ion-icon name="document-attach-outline"></ion-icon>
+          <ion-icon
+            name="document-attach-outline">
+          </ion-icon>
 
           <div>
-            <strong>Seleccionar archivo</strong>
-            <span>PDF, Word, Excel o PowerPoint</span>
+
+            <strong>
+              Seleccionar archivo
+            </strong>
+
+            <span>
+              PDF, Word, Excel o PowerPoint · Máximo 200 MB
+            </span>
+
           </div>
 
         </label>
@@ -111,21 +181,38 @@
           accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
           (change)="onFileSelected($event)">
 
-        <div *ngIf="selectedFile" class="selected-file">
 
-          <ion-icon name="document-attach-outline"></ion-icon>
+        <!-- ARCHIVO SELECCIONADO -->
+        <div
+          *ngIf="selectedFile"
+          class="selected-file">
+
+          <ion-icon
+            name="document-attach-outline">
+          </ion-icon>
 
           <div>
-            <strong>{{ selectedFile.name }}</strong>
+
+            <strong>
+              {{ selectedFile.name }}
+            </strong>
+
             <span>
-              {{ selectedFile.size / 1024 / 1024 | number:'1.1-2' }} MB
+              {{
+                selectedFile.size / 1024 / 1024
+                  | number:'1.1-2'
+              }}
+              MB
             </span>
+
           </div>
 
         </div>
 
       </div>
 
+
+      <!-- SUBIR -->
       <ion-button
         expand="block"
         class="submit-button"
@@ -136,7 +223,7 @@
           name="cloud-upload-outline">
         </ion-icon>
 
-        Preparar carga
+        Subir apunte
 
       </ion-button>
 

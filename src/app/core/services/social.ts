@@ -44,8 +44,6 @@ export class SocialService {
 
     if (currentReview.exists()) {
 
-      // Ya existe:
-      // actualizamos estrellas y comentario.
       await setDoc(
         reviewRef,
         {
@@ -59,7 +57,6 @@ export class SocialService {
 
     } else {
 
-      // Primera opinión del usuario.
       await setDoc(
         reviewRef,
         {
@@ -70,7 +67,6 @@ export class SocialService {
       );
     }
   }
-
 
   // ==========================================
   // OBTENER OPINIÓN DEL USUARIO ACTUAL
@@ -101,7 +97,6 @@ export class SocialService {
       ...reviewSnapshot.data()
     } as ReviewModel;
   }
-
 
   // ==========================================
   // OBTENER TODAS LAS OPINIONES DEL APUNTE
@@ -143,6 +138,27 @@ export class SocialService {
     );
   }
 
+  // ==========================================
+  // OBTENER TODAS LAS OPINIONES
+  // ==========================================
+
+  async getAllReviews(): Promise<ReviewModel[]> {
+
+    const reviewsRef = collection(
+      this.firestore,
+      'reviews'
+    );
+
+    const reviewsSnapshot =
+      await getDocs(reviewsRef);
+
+    return reviewsSnapshot.docs.map(
+      reviewSnapshot => ({
+        id: reviewSnapshot.id,
+        ...reviewSnapshot.data()
+      } as ReviewModel)
+    );
+  }
 
   // ==========================================
   // AUXILIAR DE FECHAS

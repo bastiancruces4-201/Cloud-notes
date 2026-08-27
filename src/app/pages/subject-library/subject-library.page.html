@@ -1,0 +1,338 @@
+<ion-content
+  [fullscreen]="true"
+  class="subject-library-page">
+
+  <div class="subject-library-container">
+
+    <!-- ==========================================
+         ENCABEZADO
+    =========================================== -->
+    <header class="page-header">
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="goBack()">
+
+        <ion-icon
+          name="arrow-back-outline">
+        </ion-icon>
+
+      </button>
+
+      <div>
+
+        <p class="section-label">
+          Biblioteca Cloud Notes
+        </p>
+
+        <h1>
+          {{ subject }}
+        </h1>
+
+      </div>
+
+    </header>
+
+
+    <!-- ==========================================
+         CARGANDO
+    =========================================== -->
+    <section
+      *ngIf="isLoading"
+      class="loading-state">
+
+      <ion-spinner
+        name="crescent">
+      </ion-spinner>
+
+      <p>
+        Cargando recursos de {{ subject }}...
+      </p>
+
+    </section>
+
+
+    <!-- ==========================================
+         CONTENIDO
+    =========================================== -->
+    <ng-container *ngIf="!isLoading">
+
+
+      <!-- ==========================================
+           LIBROS BASE CLOUD NOTES
+      =========================================== -->
+      <section class="library-section">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-label">
+              Recursos oficiales
+            </p>
+
+            <h2>
+              Biblioteca Cloud Notes
+            </h2>
+
+          </div>
+
+          <span class="resource-count">
+
+            {{ libraryResources.length }}
+
+            {{
+              libraryResources.length === 1
+                ? 'recurso'
+                : 'recursos'
+            }}
+
+          </span>
+
+        </div>
+
+
+        <!-- SIN LIBROS BASE -->
+        <div
+          *ngIf="libraryResources.length === 0"
+          class="empty-state">
+
+          <ion-icon
+            name="book-outline">
+          </ion-icon>
+
+          <h3>
+            Todavía no hay libros base
+          </h3>
+
+          <p>
+            Próximamente agregaremos material seleccionado
+            para esta asignatura.
+          </p>
+
+        </div>
+
+
+        <!-- ==========================================
+             LIBROS BASE
+        =========================================== -->
+        <div
+          *ngIf="libraryResources.length > 0"
+          class="library-grid">
+
+          <article
+            *ngFor="let resource of libraryResources"
+            class="library-card"
+            (click)="openLibraryResource(resource)">
+
+
+            <!-- ======================================
+                 PORTADA
+            ======================================= -->
+            <div
+              class="library-cover"
+              [class.has-cover]="resource.coverUrl">
+
+
+              <!-- PORTADA PERSONALIZADA -->
+              <img
+                *ngIf="resource.coverUrl"
+                [src]="resource.coverUrl"
+                [alt]="'Portada de ' + resource.title"
+                class="library-cover-image">
+
+
+              <!-- PORTADA PREDETERMINADA -->
+              <div
+                *ngIf="!resource.coverUrl"
+                class="library-book-icon">
+
+                <ion-icon
+                  name="book-outline">
+                </ion-icon>
+
+              </div>
+
+
+              <!-- IDENTIFICADOR CLOUD NOTES -->
+              <span class="official-badge">
+                Libro base
+              </span>
+
+            </div>
+
+
+            <!-- ======================================
+                 INFORMACIÓN DEL LIBRO
+            ======================================= -->
+            <div class="library-information">
+
+              <p class="library-subject">
+                {{ resource.subject }}
+              </p>
+
+              <h3>
+                {{ resource.title }}
+              </h3>
+
+              <p class="library-description-text">
+                {{ resource.description }}
+              </p>
+
+
+              <!-- AUTOR Y TIPO -->
+              <div class="library-meta">
+
+                <span>
+                  {{ resource.author }}
+                </span>
+
+                <span>
+
+                  {{
+                    resource.resourceType === 'book'
+                      ? 'Libro'
+                      : resource.resourceType === 'guide'
+                        ? 'Guía'
+                        : 'Manual'
+                  }}
+
+                </span>
+
+              </div>
+
+
+              <!-- LICENCIA -->
+              <div class="library-license">
+
+                {{ resource.license }}
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==========================================
+           APUNTES DE ESTUDIANTES
+      =========================================== -->
+      <section class="student-section">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-label">
+              Comunidad
+            </p>
+
+            <h2>
+              Apuntes de estudiantes
+            </h2>
+
+          </div>
+
+          <span class="resource-count">
+
+            {{ studentDocuments.length }}
+
+            {{
+              studentDocuments.length === 1
+                ? 'apunte'
+                : 'apuntes'
+            }}
+
+          </span>
+
+        </div>
+
+
+        <!-- SIN APUNTES -->
+        <div
+          *ngIf="studentDocuments.length === 0"
+          class="empty-state">
+
+          <ion-icon
+            name="document-text-outline">
+          </ion-icon>
+
+          <h3>
+            Todavía no hay apuntes
+          </h3>
+
+          <p>
+            Cuando los estudiantes compartan material de
+            {{ subject }}, aparecerá en esta sección.
+          </p>
+
+        </div>
+
+
+        <!-- ==========================================
+             APUNTES
+        =========================================== -->
+        <div
+          *ngIf="studentDocuments.length > 0"
+          class="student-documents-grid">
+
+          <article
+            *ngFor="let document of studentDocuments"
+            class="student-document-card"
+            (click)="openStudentDocument(document.id)">
+
+            <div class="student-document-cover">
+
+              <ion-icon
+                name="document-text-outline">
+              </ion-icon>
+
+              <span class="student-badge">
+                Estudiante
+              </span>
+
+            </div>
+
+
+            <div class="student-document-information">
+
+              <p class="student-subject">
+                {{ document.subject }}
+              </p>
+
+              <h3>
+                {{ document.title }}
+              </h3>
+
+              <p
+                *ngIf="document.description"
+                class="student-description">
+
+                {{ document.description }}
+
+              </p>
+
+              <div class="student-file-name">
+
+                {{ document.fileName }}
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+    </ng-container>
+
+  </div>
+
+</ion-content>

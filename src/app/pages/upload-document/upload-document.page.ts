@@ -150,6 +150,8 @@ if (file.size > maxFileSize) {
       filePath: uploadedFile.filePath,
 
       userId: currentUser.uid,
+      sourceType: 'student',
+      isBaseDocument: false,
       createdAt: new Date()
     });
 

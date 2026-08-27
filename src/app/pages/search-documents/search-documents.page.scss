@@ -227,4 +227,63 @@
     flex-direction: column;
     gap: 6px;
   }
+  .active-filter {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+
+  background: #eff6ff;
+
+  color: #475569;
+
+  font-size: 13px;
+}
+
+.active-filter strong {
+  color: #2563eb;
+}
+
+.clear-filter-button {
+  border: none;
+
+  background: transparent;
+
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.remove-filter-button {
+  margin-top: 16px;
+
+  --color: #2563eb;
+  --border-color: #2563eb;
+  --border-radius: 12px;
+
+  text-transform: none;
+  font-weight: 700;
+}
+
+@media (max-width: 650px) {
+
+  .active-filter {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .clear-filter-button {
+    padding: 0;
+  }
+}
 }
